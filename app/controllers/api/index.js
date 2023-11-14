@@ -1,3 +1,6 @@
+const tagController = require('./tagController');
+
+
 
 const apiController = {
   home(req, res) {
@@ -7,5 +10,6 @@ const apiController = {
 
 module.exports = {
 apiController,
+tagController
 
 };
