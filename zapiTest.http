@@ -1,0 +1,105 @@
+################################################################################
+# Fichier de test des routes HTTP de l'API
+# Nécessite l'extension REST Client pour VSCode
+# https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+################################################################################
+@local= http://localhost:{{$dotenv PORT}}/api
+
+
+------------------TAG ROUTE------------------
+
+### get all tag
+GET {{local}}/tag
+
+### create tag
+POST {{local}}/tag
+Content-Type: application/json
+
+{
+    "name": "coucou2",
+    "color" : "red"
+}
+
+### modify tag
+PUT {{local}}/tag/11
+Content-Type: application/json
+
+{
+    "name": "coucou",
+    "color" : "blue"
+}   
+
+### delete tag
+DELETE {{local}}/tag/10
+
+
+
+----------------TODO ROUTE------------------
+
+### get all todo
+GET {{local}}/todo
+
+
+### create todo
+POST {{local}}/todo
+Content-Type: application/json
+
+{
+    "description": "done a todo",
+    "done" : true
+}
+
+### modify todo
+PUT {{local}}/todo/2
+Content-Type: application/json
+
+{
+    "description": "write a todo",
+    "done" : true
+}
+
+
+### delete todo
+DELETE {{local}}/todo/1
+
+
+### get todo by id
+GET {{local}}/todo/1
+
+
+-----------category ROUTE------------------
+
+
+
+### get all categorie
+GET {{local}}/category
+
+
+### create category
+POST {{local}}/category
+Content-Type: application/json
+
+{
+    "name": "coucou",
+    "color" : "red"
+}
+
+### modify category
+PUT {{local}}/category/2
+Content-Type: application/json
+
+{
+    "description": "write a todo",
+    "done" : true
+}
+
+
+### delete category
+DELETE {{local}}/category/2
+
+
+### get todo by id
+GET {{local}}/category/1
+
+
+

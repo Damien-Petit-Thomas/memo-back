@@ -1,5 +1,5 @@
-const memoController = require('./tagController');
-const tagController = require('./memoController')
+const memoController = require('./memoController');
+const tagController = require('./tagController')
 const todoController = require('./todoController');
 const categoryController = require('./categoryController')
 const apiController = {

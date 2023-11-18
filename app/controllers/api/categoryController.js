@@ -10,7 +10,8 @@ async getAll(req, res) {
 
 async create(req, res) {
   const data = req.body;
-  data.slug = slug(data.name)
+  console.log(data)
+ data.slug = slug(data.name)
   const newcategory = await category.create(data);
   res.status(200).json(newcategory);
 },
@@ -24,8 +25,9 @@ async getOne(req, res) {
 
 async update(req, res) {
   const { id } = req.params;
-  const {description, done } = req.body;
-  const data = {description, done };
+  const {name, color} = req.body;
+  data.slug = slug(data.name)
+  const data = {name, color };
   const findcategory = await category.findByPk(id);
   if(!findcategory) throw new ApiError('category not found', { statusCode: 404 });
   const updatedcategory = await category.update({id, ...data});
