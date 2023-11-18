@@ -22,7 +22,6 @@ module.exports = {
     },
 
     async update(req, res) {
-        console.log("coucou")
         const { id } = req.params;
         const {description, done } = req.body;
         const data = {description, done };
