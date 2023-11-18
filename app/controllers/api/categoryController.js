@@ -1,6 +1,6 @@
 const { category } = require('../../models')
 const {ApiError} = require('../../helpers/errorHandler')
-
+const slug = require('../../utils/creeateSlug')
 
 module.exports = {
 async getAll(req, res) {
@@ -10,6 +10,7 @@ async getAll(req, res) {
 
 async create(req, res) {
   const data = req.body;
+  data.slug = slug(data.description)
   const newcategory = await category.create(data);
   res.status(200).json(newcategory);
 },
