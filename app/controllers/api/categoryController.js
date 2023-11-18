@@ -10,7 +10,7 @@ async getAll(req, res) {
 
 async create(req, res) {
   const data = req.body;
-  data.slug = slug(data.description)
+  data.slug = slug(data.name)
   const newcategory = await category.create(data);
   res.status(200).json(newcategory);
 },
