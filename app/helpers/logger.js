@@ -19,7 +19,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const logger = bunyan.createLogger({
-  name: 'O-builder',
+  name: 'MemoApp',
   streams,
 });
 

@@ -70,6 +70,10 @@ module.exports = class CoreDatamapper {
   }
 
   async delete(id) {
+    const find = await this.findByPk(id);
+    if (!find) {
+      throw new Error('Not found');
+    }
     const result = await this.client.query(`DELETE FROM "${this.tablename}" WHERE id = $1`, [id]);
     return !!result.rowCount;
   }
@@ -94,4 +98,43 @@ module.exports = class CoreDatamapper {
     const result = await this.client.query(query, values);
     return result.rows;
   }
+
+
+  /**
+     * Modification de données dans la table
+     * @param {object} param0 données à mettre à jour dans la table comprenant également
+     * l'identifiant de l'enregistrement
+     * @returns {object} l'enregistrement mis à jour
+     */
+  async update({ id, ...inputData }) {
+    const fieldsAndPlaceholders = [];
+    let indexPlaceholder = 1;
+    const values = [];
+
+    Object.entries(inputData).forEach(([prop, value]) => {
+      fieldsAndPlaceholders.push(`"${prop}" = $${indexPlaceholder}`);
+      indexPlaceholder += 1;
+      values.push(value);
+    });
+
+    values.push(id);
+
+    const preparedQuery = {
+      text: `
+        UPDATE "${this.tablename}" SET
+        ${fieldsAndPlaceholders},
+        updated_at = now()
+        WHERE id = $${indexPlaceholder}
+        RETURNING *
+      `,
+      values,
+    };
+
+    const result = await this.client.query(preparedQuery);
+    const row = result.rows[0];
+
+    return row;
+  }
+
+
 };
