@@ -36,6 +36,8 @@ module.exports = {
 
     async delete(req,res){
         const  { id } = req.params
-        const responser = await tag.delete(id)
+        const deletedTag = await tag.delete(id)
+        if(!deletedTag) throw new ApiError('Tag not found', { statusCode: 404 });
+        res.status(200).json({ message: 'Tag deleted' });
     }
 }
