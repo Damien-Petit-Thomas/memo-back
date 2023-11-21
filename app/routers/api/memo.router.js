@@ -8,8 +8,8 @@ const router = express.Router();
 router
     .route('/')
     .get(controllerHandler(memoController.getAll))
-router
-    .route('/create')
     .post(controllerHandler(memoController.create))
+// router
+//     .route('/create')
 
 module.exports = router;
