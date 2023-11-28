@@ -1,5 +1,6 @@
 const { memoTag} = require('../../models/index.js');
-const {ApiError} = require('../../helpers/error.js');
+const { ApiError } = require('../../helpers/errorHandler');
+
 
 
 module.exports = {
@@ -13,7 +14,15 @@ module.exports = {
     const impudata = {memo_id: memo, tag_id: tag};
     const newMemoTag = await memoTag.create(impudata);
     res.status(200).json(newMemoTag);
+  },
+
+  async delete(req, res) {
+    const {id} = req.params;
+    const deletedMemoTag = await memoTag.delete(id);
+    if(!deletedMemoTag) throw new ApiError('MemoTag not found', { statusCode: 404 });
+    res.status(200).json({ message: 'MemoTag deleted' });
   }
+  
 
 
 };

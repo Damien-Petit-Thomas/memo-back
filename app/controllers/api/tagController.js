@@ -1,6 +1,8 @@
-const { tag }   = require('../../models');
+const  {tag}   = require('../../models');
 const { ApiError } = require('../../helpers/errorHandler');
 const slug = require('../../utils/creeateSlug')
+
+
 
 module.exports = {
     async getAll(req, res) {

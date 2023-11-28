@@ -21,7 +21,7 @@ Content-Type: application/json
 }
 
 ### modify tag
-PUT {{local}}/tag/11
+PUT {{local}}/tag/38
 Content-Type: application/json
 
 {
@@ -100,6 +100,40 @@ DELETE {{local}}/category/2
 
 ### get todo by id
 GET {{local}}/category/1
+
+
+
+---------------content_types-------------------------
+
+### get all content_types
+GET {{local}}/content_type
+
+
+
+
+### create content_types
+POST {{local}}/content_type
+Content-Type: application/json
+
+{
+    "type_name": "coucou",
+    "css" : "red"
+}
+
+
+### modify content_types
+PUT {{local}}/content_type/1
+Content-Type: application/json
+
+{
+    "type_name": "coucou",
+    "css" : "blue"
+}
+
+### delete content_types
+
+DELETE {{local}}/content_types/2
+
 
 
 
