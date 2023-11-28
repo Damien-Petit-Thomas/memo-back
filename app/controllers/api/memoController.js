@@ -12,36 +12,44 @@ module.exports = {
     },
 
     async create(req, res) {
-        console.log("cpoucouc")
         const { title, contents, categoryId, tagsIds } = req.body;
-        const impudata = { title,  category_id: categoryId };
-
+        console.log(req.body)
+        const inpudata = { title,  category_id: categoryId };
+let newMemoId;
         try {
             // Step 1: Create the memo
-            const newMemo = await memo.create(impudata);
+            const newMemo = await memo.create(inpudata);
+            newMemoId = newMemo.id;
 
             if (!newMemo) {
                 throw new ApiError('Memo not found', { statusCode: 404 });
             }
 
             // Step 2: Create associated memo tags
-            const newMemoTags = await Promise.all(
-                tagsIds.map(tagId => memoTag.create({ memo_id: newMemo.id, tag_id: tagId }))
-            );
+            if (tagsIds) {
+                const newMemoTags = await Promise.all(
+                    tagsIds.map(tagId => memoTag.create({ memo_id: newMemo.id, tag_id: tagId }))
+                );
 
-            if (!newMemoTags) {
-                throw new ApiError('MemoTag not found', { statusCode: 404 });
+                if (!newMemoTags) {
+                    throw new ApiError('MemoTag not found', { statusCode: 404 });
+                }
             }
             //  step 3 : pour chaque memo_content  l'ajouter dans la table memo_content
+            if(!contents) throw new ApiError('memo must have content', { statusCode: 404 });
             const newMemoContents = await Promise.all(
-                contents.map(content => memo_content.create({ memo_id: newMemo.id, content }))
+                contents.map(item =>memo_content.create({ memo_id: newMemo.id, content: item.content, type_id: item.type_id})
+                )
             );
             if (!newMemoContents) {
                 throw new ApiError('MemoContent not found', { statusCode: 404 });
             }
             res.status(200).json(newMemo);
         } catch (error) {
-      
+        //si il y a une erreur on supprime le memo
+            if (newMemoId) {
+                await memo.delete(newMemoId);
+            }
             console.error(error);
             res.status(500).json({ error: 'Internal Server Error' });
         }
@@ -57,26 +65,33 @@ module.exports = {
     async  update(req, res) {
         const { id } = req.params;
         const { title, contents, categoryId, tagsIds } = req.body;
-        const impudata = { title, category_id: categoryId };
+        console.log(req.body)
+        const inputdata = { title, category_id: categoryId };
+
         try {
             const findMemo = await memo.findByPk(id);
             if (!findMemo) throw new ApiError('Memo not found', { statusCode: 404 });
 
-            const existingTags = await memo.getMemoTags(findMemo.id);
+            const existingTags = await memoTag.getMemoTags(findMemo.id);
+         
 
             if (title !== findMemo.title || categoryId !== findMemo.category_id) {
-            await memo.update({ id, ...impudata });
+            await memo.update(  id, inputdata );
             }
 
             if (tagsIds && JSON.stringify(tagsIds) !== JSON.stringify(existingTags)) {
-            const tagsToRemove = existingTags.filter(tag => !tagsIds.includes(tag.id));
-            const tagsToAdd = tagsIds.filter(tagId => !existingTags.map(tag => tag.id).includes(tagId));
-            await this.removeTags(findMemo.id, tagsToRemove);
-            await this.createMemoTags(findMemo.id, tagsToAdd);
+            const tagsToRemove = existingTags.filter(tag => !tagsIds.includes(tag));
+            const tagsToAdd = tagsIds.filter(tag => !existingTags.includes(tag));
+            await Promise.all(tagsToRemove.map(tag => memoTag.delete(  findMemo.id, tag )));
+            await Promise.all(tagsToAdd.map(tag => memoTag.insert( findMemo.id,  tag )));
             }
+            
 
             if (contents && JSON.stringify(contents) !== JSON.stringify(findMemo.contents)) {
-            await updateMemoContents(findMemo.id, contents);
+                // on supprime tous les memo_content du memo
+                await memo_content.deleteByMemoId(findMemo.id);
+                // on ajoute les nouveaux memo_content
+                await Promise.all(contents.map(item => memo_content.create({ memo_id: findMemo.id, content: item.content, type_id: item.type_id})));
             }
 
             res.status(200).json({ message: 'Memo updated successfully' });
@@ -86,13 +101,16 @@ module.exports = {
         }
     },
 
-    async removeTags(memoId, tagsToRemove) {
-        await Promise.all(tagsToRemove.map(tag => memoTag.delete(tag.id)));
-    },
 
-    async createMemoTags(memoId, tagsIds) {
-        await Promise.all(tagsIds.map(tagId => memoTag.create({ memo_id: memoId, tag_id: tagId })));
-    },
+
+
+
+    async delete(req, res) {
+        const {id } = req.params;
+        const deletedMemo = await memo.delete(id);
+        if(!deletedMemo) throw new ApiError('Memo not found', { statusCode: 404 });
+        res.status(200).json({ message: 'Memo deleted' });
+    }
 
 };
 

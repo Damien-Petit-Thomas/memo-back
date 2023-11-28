@@ -85,12 +85,12 @@ Content-Type: application/json
 }
 
 ### modify category
-PUT {{local}}/category/2
+PUT {{local}}/category/38
 Content-Type: application/json
 
 {
-    "description": "write a todo",
-    "done" : true
+    "name": "write a song",
+    "color" : "blue"
 }
 
 
@@ -116,7 +116,7 @@ POST {{local}}/content_type
 Content-Type: application/json
 
 {
-    "type_name": "coucou",
+    "name": "coucou",
     "css" : "red"
 }
 
@@ -137,3 +137,53 @@ DELETE {{local}}/content_types/2
 
 
 
+------------------memo route------------------
+
+
+### get all memo
+GET {{local}}/memo
+
+
+### create memo
+POST {{local}}/memo
+Content-Type: application/json
+
+{
+    "title": "j'apprends l'admin sys",
+    "contents" : [
+        {
+            "content" : "rm -rf /",
+            "type_id" : 1
+        },
+        {
+            "content" : "sudo rm -rf /",
+            "type_id" : 2
+        }
+    ],
+    "categoryId"  : 8,
+    "tagsIds" : [38, 39]
+}
+
+
+### modify memo
+PATCH  {{local}}/memo/16
+Content-Type: application/json
+
+{
+    "title": "new title",
+    "contents" : [
+        {
+            "content" : "coucou",
+            "type_id" : 1
+        },
+        {
+            "content" : "new coucou",
+            "type_id" : 2
+        }
+    ],
+    "categoryId"  : 8,
+    "tagsIds" : [38 , 37]
+}
+
+#### delete memo
+DELETE {{local}}/memo/16

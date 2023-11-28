@@ -25,12 +25,16 @@ async getOne(req, res) {
 
 async update(req, res) {
   const { id } = req.params;
-  const {name, color} = req.body;
-  data.slug = slug(data.name)
-  const data = {name, color };
+  const data = req.body;
+  console.log(data)
+  if(data.name){
+
+    data.slug = slug(data.name)
+  }
+  //si name et color n'existent pas on envoie une erreur
   const findcategory = await category.findByPk(id);
   if(!findcategory) throw new ApiError('category not found', { statusCode: 404 });
-  const updatedcategory = await category.update({id, ...data});
+  const updatedcategory = await category.update(id, data);
   res.status(200).json(updatedcategory);
 },
 

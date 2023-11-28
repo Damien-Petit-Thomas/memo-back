@@ -31,7 +31,7 @@ module.exports = {
         data.slug = slug(data.name)
         const findTag = await tag.findByPk(id);
         if(!findTag) throw new ApiError('Tag not found', { statusCode: 404 });
-        const updatedTag = await tag.update({id, ...data});
+        const updatedTag = await tag.update(id, data);
         res.status(200).json(updatedTag);
     },
 

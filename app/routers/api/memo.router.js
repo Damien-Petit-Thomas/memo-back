@@ -9,7 +9,10 @@ router
     .route('/')
     .get(controllerHandler(memoController.getAll))
     .post(controllerHandler(memoController.create))
-// router
-//     .route('/create')
+router
+    .patch('/:id(\\d+)', controllerHandler(memoController.update))
+    .get('/:id(\\d+)', controllerHandler(memoController.getOne))
+    .delete('/:id(\\d+)', controllerHandler(memoController.delete))
+    
 
 module.exports = router;
