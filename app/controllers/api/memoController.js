@@ -52,28 +52,23 @@ module.exports = {
                 }
             },
             
-            async getOne(req, res) {
+    async getOne(req, res) {
                 const { id } = req.params;
                 const findMemo = await memo.getOneMemo(id);
                 res.status(200).json(findMemo);
-                // if (!findMemo) throw new ApiError('Memo not found', { statusCode: 404 });
-                // const memoTags = await memoTag.getMemoTags(findMemo.id);
-                // const memoContents = await memo_content.getMemoContents(findMemo.id);
-                // const memoData = { ...findMemo, tags: memoTags, contents: memoContents };
-                // res.status(200).json(memoData);
             },
-            async getAll(req, res) {
+    async getAll(req, res) {
             
                 const memos = await memo.findAll();
                 res.status(200).json(memos);
             },
-            async getAllMemo(req, res) {
+    async getAllMemo(req, res) {
                 const response = await memo.getAllMemo();
                 const memos = response[0].getallmemos;
                 res.status(200).json(memos);
             },
             
-            async  update(req, res) {
+    async  update(req, res) {
         const { id } = req.params;
         const { title, contents, categoryId, tagsIds } = req.body;
         console.log(req.body)
@@ -111,11 +106,6 @@ module.exports = {
             res.status(error.statusCode || 500).json({ error: error.message || 'Internal Server Error' });
         }
     },
-
-
-
-
-
     async delete(req, res) {
         const {id } = req.params;
         const deletedMemo = await memo.delete(id);

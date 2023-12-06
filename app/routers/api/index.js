@@ -1,22 +1,36 @@
 const express = require('express');
-
-const categoryRouter = require('./category.router')
-const memoContentRouter = require('./memo_content.router');
-const todoRouter = require('./todo.router');
-const memoRouter = require('./memo.router');
-const tagRouter = require('./tag.router');
-const content_typeRouter = require('./content_type.router');
-const { apiController } = require('../../controllers/api');
 const { ApiError } = require('../../helpers/errorHandler');
 const router = express.Router();
 
+const CoreRouter = require('./coreRouter');
+const MemoRouter = require('./memo.router.js');
+
+const { tagController } = require('../../controllers/api');
+const { apiController } = require('../../controllers/api');
+const { todoController } = require('../../controllers/api');
+const { memoController } = require('../../controllers/api');
+const { lexiconController } = require('../../controllers/api');
+const { categoryController } = require('../../controllers/api');
+const { memoContentController } = require('../../controllers/api');
+const { content_typeController } = require('../../controllers/api/index.js');
+
+const tagRouter = new CoreRouter(tagController, express).router;
+const todoRouter = new CoreRouter(todoController, express).router;
+const memoRouter = new MemoRouter(memoController, express).router;
+const lexiconRouter = new CoreRouter(lexiconController, express).router;
+const categoryRouter = new CoreRouter(categoryController, express).router;
+const memoContentRouter = new CoreRouter(memoContentController, express).router;
+const content_typeRouter = new CoreRouter(content_typeController, express).router;
+
+
 router.all('/', apiController.home);
 router.use('/tag', tagRouter);
-router.use('/memo', memoRouter);
 router.use('/todo', todoRouter);
+router.use('/memo', memoRouter);
+router.use('/lexicon', lexiconRouter) 
 router.use('/category', categoryRouter)
-router.use('/content_type', content_typeRouter)
 router.use('/memo_content', memoContentRouter)
+router.use('/content_type', content_typeRouter)
 
 router.use(() => {
   throw new ApiError('API route not found', { statusCode: 400 });

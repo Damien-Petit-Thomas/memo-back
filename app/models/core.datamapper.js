@@ -1,8 +1,9 @@
 module.exports = class CoreDatamapper {
-  tablename;
 
-  constructor(client) {
+
+  constructor(client, tablename) {
     this.client = client;
+    this.tablename = tablename;
   }
 
   /**
