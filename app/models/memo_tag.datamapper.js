@@ -1,7 +1,7 @@
 const CoreDatamapper = require('./core.datamapper');
 
 module.exports  = class MemoTag extends CoreDatamapper {
-  tablename = 'memo_tag';
+
 
 
   async delete(memo_id, tag_id) {

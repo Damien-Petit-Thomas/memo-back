@@ -1,20 +1,19 @@
-const express = require('express');
-const  { memoController } = require('../../controllers/api/index.js');
+
+const CoreRouter = require('./coreRouter');;
 const controllerHandler = require('../../helpers/controllerHandler.js');
 
+class MemoRouter extends CoreRouter {
+    constructor(controller, router) {
+        super(controller, router);
+        this.setUpNewRoutes();
+    }
 
-const router = express.Router();
+setUpNewRoutes(){
+    this.router
+        .route('/all')
+        .get(controllerHandler(this.controller.getAllMemo.bind(this.controller)))
 
-router
-    .route('/')
-    .get(controllerHandler(memoController.getAll))
-    .post(controllerHandler(memoController.create))
-router
-    .get('/all', controllerHandler(memoController.getAllMemo))    
-router
-    .patch('/:id(\\d+)', controllerHandler(memoController.update))
-    .get('/:id(\\d+)', controllerHandler(memoController.getOne))
-    .delete('/:id(\\d+)', controllerHandler(memoController.delete))
-    
+}
+}
 
-module.exports = router;
+module.exports = MemoRouter;

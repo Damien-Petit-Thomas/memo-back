@@ -85,11 +85,11 @@ Content-Type: application/json
 }
 
 ### modify category
-PUT {{local}}/category/38
+PATCH {{local}}/category/38
 Content-Type: application/json
 
 {
-    "name": "write a song",
+    "name": "write those routes",
     "color" : "blue"
 }
 
@@ -203,3 +203,37 @@ DELETE {{local}}/memo/16
 
 ### get all memo-Content
 GET {{local}}/memo_content
+
+
+
+
+----------------lexicon route------------------
+
+### get all lexicon
+GET {{local}}/lexicon
+
+### get lexicon by idf
+GET {{local}}/lexicon/1
+
+### create lexicon
+POST {{local}}/lexicon
+Content-Type: application/json
+
+{
+    "word": "ansible",
+    "definition" : "outil de déploiement",
+    "category_id" : 8
+}
+
+### modify lexicon
+PATCH {{local}}/lexicon/1
+Content-Type: application/json
+
+{
+   
+    "definition" : "blue",
+    "category_id" : 8
+}
+
+### get all category
+GET {{local}}/category
