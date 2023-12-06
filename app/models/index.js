@@ -14,17 +14,22 @@ class TodoDatamapper extends CoreDatamapper {
   tablename = 'todo';
 }
 
+class LexiconDatamapper extends CoreDatamapper {
+  tablename = 'lexicon';
+}
+
 const Memo = require('./memo.datamapper')
-const Type = require('./content_type.datamapper');
 const MemoTag = require('./memo_tag.datamapper');
+const MemoContent = require('./memo_content.datamapper');
 
 module.exports = {
-memo_content: new Typedatamapper(client),
-content_type:  new Type(client),
+memo_content: new MemoContent(client),
+content_type:  new Typedatamapper(client),
 memoTag: new MemoTag(client),
 category: new CategoryDatamapper(client),
 todo: new TodoDatamapper(client),
 tag: new TagDatamapper(client),
-memo: new Memo(client)
+memo: new Memo(client),
+lexicon: new LexiconDatamapper(client)
 
 };
