@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {controllerHandler} = require('../../helpers/controllerHandler.js');
+const controllerHandler = require('../../helpers/controllerHandler.js');
 const {memo_contentController} = require('../../controllers/api/index.js');
 
 

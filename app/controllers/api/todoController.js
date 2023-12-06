@@ -27,7 +27,7 @@ module.exports = {
         const data = {description, done };
         const findTodo = await todo.findByPk(id);
         if(!findTodo) throw new ApiError('Todo not found', { statusCode: 404 });
-        const updatedTodo = await todo.update({id, ...data});
+        const updatedTodo = await todo.update(id, data);
         res.status(200).json(updatedTodo);
     },
 

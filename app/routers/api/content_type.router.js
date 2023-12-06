@@ -10,7 +10,7 @@ router
     .post(controllerHandler(content_typeController.create))
 router
     .route('/:id(\\d+)')
-    .put(controllerHandler(content_typeController.update))
+    .patch(controllerHandler(content_typeController.update))
     .get(controllerHandler(content_typeController.getOne))
     .delete(controllerHandler(content_typeController.delete))
 

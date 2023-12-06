@@ -38,5 +38,13 @@ module.exports = {
         const deletedmemo_content = await memo_content.delete(id)
         if(!deletedmemo_content) throw new ApiError('memo_content not found', { statusCode: 404 });
         res.status(200).json({ message: 'memo_content deleted' });
+    },
+
+
+    async getMemoContents(req,res){
+        const {id } = req.params;
+        const findmemo_content = await memo_content.getContentByMemoId(id);
+        if(!findmemo_content) throw new ApiError('memo_content not found', { statusCode: 404 });
+        res.status(200).json(findmemo_content);
     }
 }

@@ -1,6 +1,7 @@
 const express = require('express');
 
 const categoryRouter = require('./category.router')
+const memoContentRouter = require('./memo_content.router');
 const todoRouter = require('./todo.router');
 const memoRouter = require('./memo.router');
 const tagRouter = require('./tag.router');
@@ -15,6 +16,7 @@ router.use('/memo', memoRouter);
 router.use('/todo', todoRouter);
 router.use('/category', categoryRouter)
 router.use('/content_type', content_typeRouter)
+router.use('/memo_content', memoContentRouter)
 
 router.use(() => {
   throw new ApiError('API route not found', { statusCode: 400 });

@@ -16,7 +16,7 @@ POST {{local}}/tag
 Content-Type: application/json
 
 {
-    "name": "coucou2",
+    "name": "coucou",
     "color" : "red"
 }
 
@@ -26,7 +26,7 @@ Content-Type: application/json
 
 {
     "name": "coucou",
-    "color" : "blue"
+    "color" : "erd"
 }   
 
 ### delete tag
@@ -50,7 +50,7 @@ Content-Type: application/json
 }
 
 ### modify todo
-PUT {{local}}/todo/2
+PUT {{local}}/todo/26
 Content-Type: application/json
 
 {
@@ -122,12 +122,15 @@ Content-Type: application/json
 
 
 ### modify content_types
-PUT {{local}}/content_type/1
+PATCH {{local}}/content_type/4
 Content-Type: application/json
 
+
 {
-    "type_name": "coucou",
-    "css" : "blue"
+    "data" : {
+        "name": "blockquote",
+        "css" : ""
+    }
 }
 
 ### delete content_types
@@ -139,10 +142,15 @@ DELETE {{local}}/content_types/2
 
 ------------------memo route------------------
 
-
+ 
 ### get all memo
 GET {{local}}/memo
+ 
+### get all memo with tag
+GET {{local}}/memo/all
 
+### get memo by id
+GET {{local}}/memo/46
 
 ### create memo
 POST {{local}}/memo
@@ -187,3 +195,11 @@ Content-Type: application/json
 
 #### delete memo
 DELETE {{local}}/memo/16
+
+
+
+
+------------------memo-Content route------------------
+
+### get all memo-Content
+GET {{local}}/memo_content

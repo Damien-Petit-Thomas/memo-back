@@ -10,6 +10,8 @@ router
     .get(controllerHandler(memoController.getAll))
     .post(controllerHandler(memoController.create))
 router
+    .get('/all', controllerHandler(memoController.getAllMemo))    
+router
     .patch('/:id(\\d+)', controllerHandler(memoController.update))
     .get('/:id(\\d+)', controllerHandler(memoController.getOne))
     .delete('/:id(\\d+)', controllerHandler(memoController.delete))

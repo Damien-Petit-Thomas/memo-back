@@ -1,68 +1,79 @@
 const { memo, memoTag , memo_content,}   = require('../../models');
 const { ApiError } = require('../../helpers/errorHandler');
 
-
+const slug = require('../../utils/creeateSlug')
 
 
 
 module.exports = {
-    async getAll(req, res) {
-        const memos = await memo.findAll();
-        res.status(200).json(memos);
-    },
-
+    
     async create(req, res) {
         const { title, contents, categoryId, tagsIds } = req.body;
         console.log(req.body)
         const inpudata = { title,  category_id: categoryId };
-let newMemoId;
+        inpudata.slug = slug(inpudata.title)
+        let newMemoId;
         try {
             // Step 1: Create the memo
             const newMemo = await memo.create(inpudata);
             newMemoId = newMemo.id;
-
+            
             if (!newMemo) {
                 throw new ApiError('Memo not found', { statusCode: 404 });
             }
-
+            
             // Step 2: Create associated memo tags
             if (tagsIds) {
                 const newMemoTags = await Promise.all(
                     tagsIds.map(tagId => memoTag.create({ memo_id: newMemo.id, tag_id: tagId }))
-                );
-
-                if (!newMemoTags) {
-                    throw new ApiError('MemoTag not found', { statusCode: 404 });
+                    );
+                    
+                    if (!newMemoTags) {
+                        throw new ApiError('MemoTag not found', { statusCode: 404 });
+                    }
                 }
-            }
-            //  step 3 : pour chaque memo_content  l'ajouter dans la table memo_content
-            if(!contents) throw new ApiError('memo must have content', { statusCode: 404 });
-            const newMemoContents = await Promise.all(
-                contents.map(item =>memo_content.create({ memo_id: newMemo.id, content: item.content, type_id: item.type_id})
-                )
-            );
-            if (!newMemoContents) {
-                throw new ApiError('MemoContent not found', { statusCode: 404 });
-            }
-            res.status(200).json(newMemo);
-        } catch (error) {
-        //si il y a une erreur on supprime le memo
-            if (newMemoId) {
-                await memo.delete(newMemoId);
-            }
-            console.error(error);
-            res.status(500).json({ error: 'Internal Server Error' });
-        }
-    },
-
-    async getOne(req, res) {
-        const { id } = req.params;
-        const findMemo = await memo.findByPk(id);
-        if (!findMemo) throw new ApiError('Memo not found', { statusCode: 404 });
-        res.status(200).json(findMemo);
-    },
-
-    async  update(req, res) {
+                //  step 3 : pour chaque memo_content  l'ajouter dans la table memo_content
+                if(!contents) throw new ApiError('memo must have content', { statusCode: 404 });
+                const newMemoContents = await Promise.all(
+                    contents.map(item =>memo_content.create({ memo_id: newMemo.id, content: item.content, type_id: item.type_id})
+                    )
+                    );
+                    if (!newMemoContents) {
+                        throw new ApiError('MemoContent not found', { statusCode: 404 });
+                    }
+                    res.status(200).json(newMemo);
+                } catch (error) {
+                    //si il y a une erreur on supprime le memo
+                    if (newMemoId) {
+                        await memo.delete(newMemoId);
+                    }
+                    console.error(error);
+                    res.status(500).json({ error: 'Internal Server Error' });
+                }
+            },
+            
+            async getOne(req, res) {
+                const { id } = req.params;
+                const findMemo = await memo.getOneMemo(id);
+                res.status(200).json(findMemo);
+                // if (!findMemo) throw new ApiError('Memo not found', { statusCode: 404 });
+                // const memoTags = await memoTag.getMemoTags(findMemo.id);
+                // const memoContents = await memo_content.getMemoContents(findMemo.id);
+                // const memoData = { ...findMemo, tags: memoTags, contents: memoContents };
+                // res.status(200).json(memoData);
+            },
+            async getAll(req, res) {
+            
+                const memos = await memo.findAll();
+                res.status(200).json(memos);
+            },
+            async getAllMemo(req, res) {
+                const response = await memo.getAllMemo();
+                const memos = response[0].getallmemos;
+                res.status(200).json(memos);
+            },
+            
+            async  update(req, res) {
         const { id } = req.params;
         const { title, contents, categoryId, tagsIds } = req.body;
         console.log(req.body)
