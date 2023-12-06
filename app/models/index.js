@@ -1,19 +1,30 @@
-const client = require('../config/db');
-const Tag = require('./tag.datamapper');
+const client = require('../config/db'); 
+const CoreDatamapper = require('./core.datamapper');
+
+class Typedatamapper extends CoreDatamapper{
+  tablename = 'content_type'
+}
+class CategoryDatamapper extends CoreDatamapper {
+  tablename = 'category';
+}
+class TagDatamapper extends CoreDatamapper {
+  tablename = 'tag';
+}
+class TodoDatamapper extends CoreDatamapper {
+  tablename = 'todo';
+}
+
 const Memo = require('./memo.datamapper')
-const Todo = require('./todo.datamapper');
-const Category = require('./category.datamapper');
 const Type = require('./content_type.datamapper');
-const Memo_content = require('./memo_content.datamapper');
 const MemoTag = require('./memo_tag.datamapper');
 
 module.exports = {
-memo_content: new Memo_content(client),
+memo_content: new Typedatamapper(client),
 content_type:  new Type(client),
 memoTag: new MemoTag(client),
-category: new Category(client),
-todo: new Todo(client),
-tag: new Tag(client),
+category: new CategoryDatamapper(client),
+todo: new TodoDatamapper(client),
+tag: new TagDatamapper(client),
 memo: new Memo(client)
 
 };
