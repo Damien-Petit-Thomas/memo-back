@@ -16,7 +16,7 @@ POST {{local}}/tag
 Content-Type: application/json
 
 {
-    "name": "coucou",
+    "name": "coucou coucou",
     "color" : "red"
 }
 
@@ -46,7 +46,7 @@ Content-Type: application/json
 
 {
     "description": "done a todo",
-    "done" : true
+    "done" : false
 }
 
 ### modify todo
