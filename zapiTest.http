@@ -50,12 +50,12 @@ Content-Type: application/json
 }
 
 ### modify todo
-PUT {{local}}/todo/26
+PATCH  {{local}}/todo/50
 Content-Type: application/json
 
 {
     "description": "write a todo",
-    "done" : true
+    "done" : false
 }
 
 
@@ -106,13 +106,13 @@ GET {{local}}/category/1
 ---------------content_types-------------------------
 
 ### get all content_types
-GET {{local}}/content_type
+GET {{local}}/contentType
 
 
 
 
 ### create content_types
-POST {{local}}/content_type
+POST {{local}}/contentType
 Content-Type: application/json
 
 {
@@ -122,7 +122,7 @@ Content-Type: application/json
 
 
 ### modify content_types
-PATCH {{local}}/content_type/4
+PATCH {{local}}/contentType/4
 Content-Type: application/json
 
 

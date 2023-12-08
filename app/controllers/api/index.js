@@ -6,33 +6,24 @@ const { tag } = require('../../models')
 const { todo} = require('../../models')
 const { lexicon } = require('../../models'); 
 const { category } = require('../../models') 
-const { content_type } = require('../../models') 
-const { memo_content } = require('../../models')
-
-const todoController = new CoreController(todo);
-const tagController = new CategoryTagController(tag);
-const lexiconController = new CoreController(lexicon);
-const memoContentController = new CoreController(memo_content);
-const categoryController = new CategoryTagController(category);
-const content_typeController = new CoreController(content_type);
-
-
+const { contentType } = require('../../models') 
+const { memoContent } = require('../../models')
 
 
 const apiController = {
-  home(req, res) {
+home(req, res) {
     res.send('Hello World!');
   }
 }
 
 module.exports = {
-  apiController,
-  tagController,
-  memoController,
-  todoController,
-  lexiconController, 
-  categoryController,
-  memoContentController,
-  content_typeController,
+   apiController,
+   memoController,
+   todoController : new CoreController(todo),
+   tagController: new CategoryTagController(tag),
+   lexiconController :new CoreController(lexicon),
+   memoContentController :new CoreController(memoContent),
+   categoryController :new CategoryTagController(category),
+   contentTypeController :new CoreController(contentType)
 
 };

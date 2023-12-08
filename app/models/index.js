@@ -10,7 +10,7 @@ module.exports = {
   memoTag: new MemoTag(client, 'memo_tag'),
   tag:  new CoreDatamapper(client, 'tag'),
   todo : new CoreDatamapper(client, 'todo'),
-  lexico : new CoreDatamapper(client, 'lexicon'),
+  lexicon : new CoreDatamapper(client, 'lexicon'),
   category : new CoreDatamapper(client, 'category'),
   memoContent: new CoreDatamapper(client , 'memo_content'),
   contentType : new CoreDatamapper(client, 'content_type'),

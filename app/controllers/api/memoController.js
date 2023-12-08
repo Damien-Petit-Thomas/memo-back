@@ -1,4 +1,4 @@
-const { memo, memoTag , memo_content,}   = require('../../models');
+const { memo, memoTag , memoContent,}   = require('../../models');
 const { ApiError } = require('../../helpers/errorHandler');
 
 const slug = require('../../utils/creeateSlug')
@@ -35,7 +35,7 @@ module.exports = {
                 //  step 3 : pour chaque memo_content  l'ajouter dans la table memo_content
                 if(!contents) throw new ApiError('memo must have content', { statusCode: 404 });
                 const newMemoContents = await Promise.all(
-                    contents.map(item =>memo_content.create({ memo_id: newMemo.id, content: item.content, type_id: item.type_id})
+                    contents.map(item =>memoContent.create({ memo_id: newMemo.id, content: item.content, type_id: item.type_id})
                     )
                     );
                     if (!newMemoContents) {
@@ -57,6 +57,13 @@ module.exports = {
                 const findMemo = await memo.getOneMemo(id);
                 res.status(200).json(findMemo);
             },
+
+    async getMemoBySlug(req, res) {
+                const { slug } = req.params;
+                const findMemo = await memo.getMemoBySlug(slug);
+                res.status(200).json(findMemo);
+            }
+            ,
     async getAll(req, res) {
             
                 const memos = await memo.findAll();

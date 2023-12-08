@@ -3,9 +3,7 @@ const CoreController = require('./coreController')
 const slug = require('../../utils/creeateSlug')
 
 module.exports = class CategoryTagController extends CoreController {
-  constructor() {
-    super(category);
-  }
+
   async create(req, res) {
     const data = req.body;
     data.slug = slug(data.name)

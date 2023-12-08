@@ -14,6 +14,12 @@ constructor(client, tablename) {
     return response.rows;
   }
 
+  async getMemoBySlug(slug) {
+    let sql = `SELECT * FROM getMemoBySlug($1) `;
+    let values = [slug];
+    const response = await this.client.query(sql, values);
+    return response.rows;
+  }
 
   async getAllMemo() {
     let sql = `SELECT * FROM getAllMemos() `;

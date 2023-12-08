@@ -12,6 +12,9 @@ setUpNewRoutes(){
     this.router
         .route('/all')
         .get(controllerHandler(this.controller.getAllMemo.bind(this.controller)))
+    this.router 
+        .route('/:slug')
+        .get(controllerHandler(this.controller.getMemoBySlug.bind(this.controller)))
 
 }
 }
