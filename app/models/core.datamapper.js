@@ -108,7 +108,6 @@ module.exports = class CoreDatamapper {
      * @returns {object} l'enregistrement mis à jour
      */
   async update( id, inputdata ) {
-    console.log(inputdata)
     const fieldsAndPlaceholders = [];
     let indexPlaceholder = 1;
     const values = [];

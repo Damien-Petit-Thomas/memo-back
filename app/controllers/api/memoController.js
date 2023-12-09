@@ -9,7 +9,6 @@ module.exports = {
     
     async create(req, res) {
         const { title, contents, categoryId, tagsIds } = req.body;
-        console.log(req.body)
         const inpudata = { title,  category_id: categoryId };
         inpudata.slug = slug(inpudata.title)
         let newMemoId;
@@ -78,7 +77,6 @@ module.exports = {
     async  update(req, res) {
         const { id } = req.params;
         const { title, contents, categoryId, tagsIds } = req.body;
-        console.log(req.body)
         const inputdata = { title, category_id: categoryId };
 
         try {
