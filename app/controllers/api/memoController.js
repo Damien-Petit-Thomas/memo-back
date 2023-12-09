@@ -102,9 +102,9 @@ module.exports = {
 
             if (contents && JSON.stringify(contents) !== JSON.stringify(findMemo.contents)) {
                 // on supprime tous les memo_content du memo
-                await memo_content.deleteByMemoId(findMemo.id);
+                await memoContent.deleteByMemoId(id);
                 // on ajoute les nouveaux memo_content
-                await Promise.all(contents.map(item => memo_content.create({ memo_id: findMemo.id, content: item.content, type_id: item.type_id})));
+                await Promise.all(contents.map(item => memoContent.create({ memo_id: findMemo.id, content: item.content, type_id: item.type_id})));
             }
 
             res.status(200).json({ message: 'Memo updated successfully' });

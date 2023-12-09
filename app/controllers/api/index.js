@@ -1,5 +1,5 @@
 const CoreController = require('./coreController'); 
-const CategoryTagController = require('./categoryTagController');
+const CategoryTagController = require('./categoryController');
 const memoController = require('./memoController');
 
 const { tag } = require('../../models')

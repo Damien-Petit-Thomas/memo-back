@@ -146,11 +146,16 @@ DELETE {{local}}/content_types/2
 ### get all memo
 GET {{local}}/memo
  
+
+### get one by slug
+GET {{local}}/memo/base-ansible-
+
 ### get all memo with tag
 GET {{local}}/memo/all
 
 ### get memo by id
-GET {{local}}/memo/46
+GET {{local}}/memo/49
+
 
 ### create memo
 POST {{local}}/memo

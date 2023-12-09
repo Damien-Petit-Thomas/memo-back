@@ -3,7 +3,7 @@ const client = require('../config/db');
 const Memo = require('./memo.datamapper')
 const MemoTag = require('./memo_tag.datamapper');
 const CoreDatamapper = require('./core.datamapper');
-
+const MemoContent = require('./memo_content.datamapper');
 
 module.exports = {
   memo: new Memo(client, 'memo'),
@@ -12,6 +12,6 @@ module.exports = {
   todo : new CoreDatamapper(client, 'todo'),
   lexicon : new CoreDatamapper(client, 'lexicon'),
   category : new CoreDatamapper(client, 'category'),
-  memoContent: new CoreDatamapper(client , 'memo_content'),
+  memoContent: new MemoContent(client , 'memo_content'),
   contentType : new CoreDatamapper(client, 'content_type'),
 };
