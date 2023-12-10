@@ -154,7 +154,7 @@ GET {{local}}/memo/base-ansible-
 GET {{local}}/memo/all
 
 ### get memo by id
-GET {{local}}/memo/49
+GET {{local}}/memo/59
 
 
 ### create memo
@@ -242,3 +242,46 @@ Content-Type: application/json
 
 ### get all category
 GET {{local}}/category
+
+
+
+------------------link route------------------
+
+### get all link
+GET {{local}}/link
+
+
+### get link by id
+GET {{local}}/link/1
+
+
+### create link
+POST {{local}}/link
+Content-Type: application/json
+
+{
+    "memo_id": 46,
+    "name": "ansible",
+    "url" : "https://www.ansible.com/"
+}
+
+### modify link
+PATCH {{local}}/link/4
+Content-Type: application/json
+
+{
+    "memo_id": 46,
+    "name": "ansible2",
+    "url" : "https://www.ansible.com/"
+}
+
+
+
+
+
+
+
+
+
+
+
