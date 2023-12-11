@@ -127,10 +127,10 @@ Content-Type: application/json
 
 
 {
-    "data" : {
+     
         "name": "blockquote",
         "css" : ""
-    }
+    
 }
 
 ### delete content_types
@@ -154,7 +154,7 @@ GET {{local}}/memo/base-ansible-
 GET {{local}}/memo/all
 
 ### get memo by id
-GET {{local}}/memo/59
+GET {{local}}/memo/58
 
 
 ### create memo
@@ -166,15 +166,15 @@ Content-Type: application/json
     "contents" : [
         {
             "content" : "rm -rf /",
-            "type_id" : 1
+            "type_id" : 2
         },
         {
             "content" : "sudo rm -rf /",
             "type_id" : 2
         }
     ],
-    "categoryId"  : 8,
-    "tagsIds" : [38, 39]
+    "categoryId"  : 9,
+    "tagsIds" : [57, 58]
 }
 
 

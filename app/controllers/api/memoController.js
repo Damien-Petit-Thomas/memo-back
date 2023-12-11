@@ -8,7 +8,7 @@ const slug = require('../../utils/creeateSlug')
 module.exports = {
     
     async create(req, res) {
-        const { title, contents, categoryId, tagsIds } = req.body;
+        const { title, contents, categoryId, tagsIds,  } = req.body;
         const inpudata = { title,  category_id: categoryId };
         inpudata.slug = slug(inpudata.title)
         let newMemoId;
@@ -33,14 +33,19 @@ module.exports = {
                 }
                 //  step 3 : pour chaque memo_content  l'ajouter dans la table memo_content
                 if(!contents) throw new ApiError('memo must have content', { statusCode: 404 });
-                const newMemoContents = await Promise.all(
-                    contents.map(item =>memoContent.create({ memo_id: newMemo.id, content: item.content, type_id: item.type_id})
-                    )
-                    );
-                    if (!newMemoContents) {
-                        throw new ApiError('MemoContent not found', { statusCode: 404 });
-                    }
-                    res.status(200).json(newMemo);
+                for (let i = 0; i < contents.length; i++) {
+                    const item = contents[i];
+                    await memoContent.create({ memo_id: newMemo.id, content: item.content, type_id: item.type_id, position: item.position});
+                }
+
+                // const newMemoContents = await Promise.all(
+                //     contents.map(item =>memoContent.create({ memo_id: newMemo.id, content: item.content, type_id: item.type_id})
+                //     )
+                //     );
+                //     if (!newMemoContents) {
+                //         throw new ApiError('MemoContent not found', { statusCode: 404 });
+                //     }
+                //     res.status(200).json(newMemo);
                 } catch (error) {
                     //si il y a une erreur on supprime le memo
                     if (newMemoId) {
@@ -102,7 +107,13 @@ module.exports = {
                 // on supprime tous les memo_content du memo
                 await memoContent.deleteByMemoId(id);
                 // on ajoute les nouveaux memo_content
-                await Promise.all(contents.map(item => memoContent.create({ memo_id: findMemo.id, content: item.content, type_id: item.type_id})));
+                // await Promise.all(contents.map(item => memoContent.create({ memo_id: findMemo.id, content: item.content, type_id: item.type_id})));
+                // on ne fait pas de Promise.all car on veut inserer les memo_content dans l'ordre
+                //! todo : ajouter une colonne order dans la table memo_content pour pouvoir les trier et utiliser Promise.all
+                for (let i = 0; i < contents.length; i++) {
+                    const item = contents[i];
+                    await memoContent.create({ memo_id: findMemo.id, content: item.content, type_id: item.type_id, position: item.position});
+                }
             }
 
             res.status(200).json({ message: 'Memo updated successfully' });
