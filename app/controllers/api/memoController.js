@@ -82,7 +82,7 @@ module.exports = {
         const { id } = req.params;
         const { title, contents, categoryId, tagsIds } = req.body;
         const inputdata = { title, category_id: categoryId };
-
+        inputdata.slug = slug(inputdata.title)
         try {
             const findMemo = await memo.findByPk(id);
             if (!findMemo) throw new ApiError('Memo not found', { statusCode: 404 });
