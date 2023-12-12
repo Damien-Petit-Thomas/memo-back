@@ -75,8 +75,7 @@ module.exports = {
             },
     async getAllMemo(req, res) {
                 const response = await memo.getAllMemo();
-                const memos = response[0].getallmemos;
-                res.status(200).json(memos);
+                res.status(200).json(response[0].getallmemos);
             },
             
     async  update(req, res) {
