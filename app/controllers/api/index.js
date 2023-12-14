@@ -1,6 +1,7 @@
 const CoreController = require('./coreController'); 
 const CategoryTagController = require('./categoryController');
 const memoController = require('./memoController');
+const LinkController = require('./linkController');
 
 const  {
   tag, 
@@ -23,7 +24,7 @@ home(req, res) {
 module.exports = {
   apiController,
   memoController,
-  linkController: new CoreController(link),
+  linkController: new LinkController(link),
   todoController : new CoreController(todo),
   tagController: new CategoryTagController(tag),
   lexiconController :new CoreController(lexicon),

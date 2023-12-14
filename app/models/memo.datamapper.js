@@ -1,10 +1,7 @@
 const CoreDatamapper = require('./core.datamapper');
 
 module.exports = class MemoDatamapper extends CoreDatamapper {
-constructor(client, tablename) {
-    super(client, tablename);
-    this.tablename = 'memo';
-  }
+
 
   async getOneMemo(memo_id) {
     

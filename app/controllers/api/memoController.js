@@ -105,9 +105,7 @@ module.exports = {
             if (contents && JSON.stringify(contents) !== JSON.stringify(findMemo.contents)) {
                 // on supprime tous les memo_content du memo
                 await memoContent.deleteByMemoId(id);
-                // on ajoute les nouveaux memo_content
-                // await Promise.all(contents.map(item => memoContent.create({ memo_id: findMemo.id, content: item.content, type_id: item.type_id})));
-                // on ne fait pas de Promise.all car on veut inserer les memo_content dans l'ordre
+  
                 //! todo : ajouter une colonne order dans la table memo_content pour pouvoir les trier et utiliser Promise.all
                 for (let i = 0; i < contents.length; i++) {
                     const item = contents[i];
