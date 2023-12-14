@@ -38,14 +38,8 @@ module.exports = {
                     await memoContent.create({ memo_id: newMemo.id, content: item.content, type_id: item.type_id, position: item.position});
                 }
 
-                // const newMemoContents = await Promise.all(
-                //     contents.map(item =>memoContent.create({ memo_id: newMemo.id, content: item.content, type_id: item.type_id})
-                //     )
-                //     );
-                //     if (!newMemoContents) {
-                //         throw new ApiError('MemoContent not found', { statusCode: 404 });
-                //     }
-                //     res.status(200).json(newMemo);
+                newMemo.tags = tagsIds;
+                return res.status(201).json(newMemo);
                 } catch (error) {
                     //si il y a une erreur on supprime le memo
                     if (newMemoId) {
@@ -81,6 +75,7 @@ module.exports = {
     async  update(req, res) {
         const { id } = req.params;
         const { title, contents, categoryId, tagsIds } = req.body;
+        const newMemo = { title, category_id: categoryId, id , tags: tagsIds};
         const inputdata = { title, category_id: categoryId };
         inputdata.slug = slug(inputdata.title)
         try {
@@ -113,7 +108,7 @@ module.exports = {
                 }
             }
 
-            res.status(200).json({ message: 'Memo updated successfully' });
+            res.status(200).json(newMemo);
         } catch (error) {
             console.error(error);
             res.status(error.statusCode || 500).json({ error: error.message || 'Internal Server Error' });
