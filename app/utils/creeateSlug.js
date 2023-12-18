@@ -1,4 +1,5 @@
 
  module.exports =  function createSlug(data) {
-    return data.replace(/\s+/g, '-').trim().toLowerCase();
+    console.log("data", data)
+    return data.trim().replace(/\s+/g, '-').toLowerCase();
 }

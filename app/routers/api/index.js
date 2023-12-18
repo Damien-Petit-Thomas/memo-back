@@ -11,6 +11,7 @@ const {
   linkController,
   todoController,
   memoController,
+  styleController,
   lexiconController,
   categoryController,
   memoContentController,
@@ -26,6 +27,7 @@ const tagRouter = new CoreRouter(tagController, express).router;
 const linkRouter = new CoreRouter(linkController, express).router;
 const todoRouter = new CoreRouter(todoController, express).router;
 const memoRouter = new MemoRouter(memoController, express).router;
+const styleRouter = new CoreRouter(styleController, express).router;
 const lexiconRouter = new CoreRouter(lexiconController, express).router;
 const categoryRouter = new CoreRouter(categoryController, express).router;
 const memoContentRouter = new CoreRouter(memoContentController, express).router;
@@ -37,6 +39,7 @@ router.use('/tag', tagRouter);
 router.use('/link', linkRouter);
 router.use('/todo', todoRouter);
 router.use('/memo', memoRouter);
+router.use('/style', styleRouter);
 router.use('/lexicon', lexiconRouter) 
 router.use('/category', categoryRouter)
 router.use('/memo_content', memoContentRouter)

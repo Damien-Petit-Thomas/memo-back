@@ -22,6 +22,7 @@ module.exports  = class MemoTag extends CoreDatamapper {
    async insert(memo_id, tag_id) {
     const quary = `INSERT INTO ${this.tablename} (memo_id, tag_id) VALUES ($1, $2) RETURNING *`;
     const values = [memo_id, tag_id];
+    console.log("values", values)
     const result = await this.client.query(quary, values);
     return result.rows[0];
 

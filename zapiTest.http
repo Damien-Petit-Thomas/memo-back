@@ -108,7 +108,8 @@ GET {{local}}/category/1
 ### get all content_types
 GET {{local}}/contentType
 
-
+### get one content_types
+GET {{local}}/contentType/10
 
 
 ### create content_types
@@ -116,26 +117,26 @@ POST {{local}}/contentType
 Content-Type: application/json
 
 {
-    "name": "coucou",
-    "css" : "red"
+    "name": "noteCard",
+    "style_id" : [1,2]
 }
 
 
 ### modify content_types
-PATCH {{local}}/contentType/4
+PATCH {{local}}/contentType/10
 Content-Type: application/json
 
 
 {
-     
-        "name": "blockquote",
-        "css" : ""
+    
+        "name": "noteCard",
+        "available_style" : [1,2]
     
 }
 
 ### delete content_types
 
-DELETE {{local}}/content_types/2
+DELETE {{local}}/contentType/4
 
 
 
@@ -150,7 +151,7 @@ GET {{local}}/memo
 ### get one by slug
 GET {{local}}/memo/un-sublime-titre
 
-### get all memo with tag
+### get all memo with tag 
 GET {{local}}/memo/all
  
 ### get memo by id
@@ -249,7 +250,7 @@ GET {{local}}/category
 
 ------------------link route------------------
 
-### get all link
+### get all linke
 GET {{local}}/link
 
 
@@ -280,10 +281,31 @@ Content-Type: application/json
 
 
 
+------------------style route  ------------------
+
+### get all style
+GET {{local}}/style
 
 
+### get style by id
+GET {{local}}/style/1
 
 
+### create style
+POST {{local}}/style
+Content-Type: application/json
 
+{
+    "name": "default",
+    "css" : ""
+}
 
+### modify style
+PATCH {{local}}/style/2
+content-type: application/json
+
+{
+    "name": "warning",
+    "css" : "background-color: #712828; border-left: 4px solid #C44949;"
+}
 
