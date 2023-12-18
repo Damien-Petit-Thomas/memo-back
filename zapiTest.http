@@ -306,6 +306,6 @@ content-type: application/json
 
 {
     "name": "warning",
-    "css" : "background-color: #712828; border-left: 4px solid #C44949;"
+    "css" : "background-color: #712828; border-left: 4px solid #935656;"
 }
 

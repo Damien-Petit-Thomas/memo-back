@@ -8,7 +8,9 @@ const slug = require('../../utils/creeateSlug')
 module.exports = {
     
     async create(req, res) {
-        const { title, contents, categoryId, tagsIds,  } = req.body;
+        const { title, contents, categoryId, tagsIds, styleId  } = req.body;
+        console.log('styleId', styleId)
+        console.log(req.body)
         const inpudata = { title,  category_id: categoryId };
         inpudata.slug = slug(inpudata.title)
         let newMemoId;
@@ -35,7 +37,7 @@ module.exports = {
                 if(!contents) throw new ApiError('memo must have content', { statusCode: 404 });
                 for (let i = 0; i < contents.length; i++) {
                     const item = contents[i];
-                    await memoContent.create({ memo_id: newMemo.id, content: item.content, type_id: item.type_id, position: item.position});
+                    await memoContent.create({ memo_id: newMemo.id, content: item.content, type_id: item.type_id, position: item.position, style_id: item.styleId});
                 }
 
                 newMemo.tags = tagsIds;
@@ -74,7 +76,9 @@ module.exports = {
             
     async  update(req, res) {
         const { id } = req.params;
-        const { title, contents, categoryId, tagsIds } = req.body;
+        const { title, contents, categoryId, tagsIds, styleId } = req.body;
+        console.log(req.body)
+        console.log('styleId', styleId)
         const newMemo = { title, category_id: categoryId, id , tags: tagsIds};
         const inputdata = { title, category_id: categoryId };
         inputdata.slug = slug(inputdata.title)
@@ -103,8 +107,9 @@ module.exports = {
   
                 //! todo : ajouter une colonne order dans la table memo_content pour pouvoir les trier et utiliser Promise.all
                 for (let i = 0; i < contents.length; i++) {
+                    console.log('styleId', styleId)
                     const item = contents[i];
-                    await memoContent.create({ memo_id: findMemo.id, content: item.content, type_id: item.type_id, position: item.position});
+                    await memoContent.create({ memo_id: findMemo.id, content: item.content, type_id: item.type_id, position: item.position, style_id: item.styleId});
                 }
             }
 
