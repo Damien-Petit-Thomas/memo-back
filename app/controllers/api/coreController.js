@@ -11,6 +11,7 @@ module.exports = class CoreController {
     res.status(200).json(response);
   }
   
+  
   async getOne(req, res) {
     const {id} = req.params;
       const response = await this.datamapper.findByPk(id);
