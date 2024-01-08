@@ -1,9 +1,11 @@
 const debug = require('debug')('SQL:log');
 const { Pool } = require('pg');
 require('dotenv').config();
+
+const url=process.env.DATABASE_URL;
 const pool = new Pool(
   {
-    connectionString: process.env.DATABASE_URL,
+    connectionString: url,
     ssl: {
       rejectUnauthorized: false,
     },
@@ -13,8 +15,8 @@ const pool = new Pool(
 module.exports = {
 
   originalClient: pool,
-
   async query(...args) {
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaa",url),
     debug(...args);
 
     return this.originalClient.query(...args);
