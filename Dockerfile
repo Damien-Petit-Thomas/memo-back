@@ -1,16 +1,24 @@
-FROM node:lts
-
+FROM node:lts as dev
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY . .
 
 RUN npm install
 
-
-COPY . .
-
+VOLUME /app
 
 EXPOSE 3001
 
-CMD ["npm", "start"]
+
+CMD ["npm", "run" , "dev"]
+
+
+
+FROM dev as prod  
+
+WORKDIR /app
+
+EXPOSE 3001
+
+CMD ["npm", "run" , "start"]
