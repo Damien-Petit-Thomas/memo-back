@@ -136,7 +136,7 @@ Content-Type: application/json
 
 ### delete content_types
 
-DELETE {{local}}/contentType/4
+DELETE {{local}}/contentType/9
 
 
 
