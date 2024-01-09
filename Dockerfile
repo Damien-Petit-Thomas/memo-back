@@ -15,10 +15,10 @@ CMD ["npm", "run" , "dev"]
 
 
 
-FROM dev as prod  
+# FROM dev as prod  
 
-WORKDIR /app
+# WORKDIR /app
 
-EXPOSE 3001
+# EXPOSE 3001
 
-CMD ["npm", "run" , "start"]
+# CMD ["npm", "run" , "start"]
