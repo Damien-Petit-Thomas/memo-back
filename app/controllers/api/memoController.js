@@ -65,13 +65,27 @@ module.exports = {
             }
             ,
     async getAll(req, res) {
-            
                 const memos = await memo.findAll();
+                
                 res.status(200).json(memos);
             },
     async getAllMemo(req, res) {
-                const response = await memo.getAllMemo();
-                res.status(200).json(response[0].getallmemos);
+                const memos = await memo.getAllMemo();
+
+                // on trie les memos par ordre alphabétique
+                memos[0].getallmemos.sort((a, b) => {
+                    if (a.category.name < b.category.name) {
+                        return 1;
+                    }
+                    if (a.category.name > b.category.name) {
+                        return -1;
+                    }
+                    return 0;
+                }
+                );
+
+
+                res.status(200).json(memos[0].getallmemos);
             },
             
     async  update(req, res) {
