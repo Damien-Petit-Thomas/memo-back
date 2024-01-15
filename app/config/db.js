@@ -16,7 +16,6 @@ module.exports = {
 
   originalClient: pool,
   async query(...args) {
-    console.log("aaaaaaaaaaaaaaaaaaaaaaaaa",url),
     debug(...args);
 
     return this.originalClient.query(...args);
